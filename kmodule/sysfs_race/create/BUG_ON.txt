@@ -1,0 +1,90 @@
+
+----------- BUG_ON(!root) output message ---------------
+[  333.066327] +myfs_mount
+[  333.066341] ------------[ cut here ]------------
+[  333.066389] kernel BUG at fs/super.c:1119!
+[  333.066431] invalid opcode: 0000 [#1] SMP 
+[  333.066474] Modules linked in: fsmod(O+) rpcsec_gss_krb5 auth_rpcgss oid_registry nfsv4 target_core_mod configfs ip6table_filter ip6_tables ebtable_nat ebtables ipt_MASQUERADE iptable_nat nf_nat_ipv4 nf_nat nf_conntrack_ipv4 nf_defrag_ipv4 xt_conntrack nf_conntrack ipt_REJECT xt_CHECKSUM iptable_mangle xt_tcpudp iptable_filter ip_tables x_tables openvswitch ib_iser rdma_cm ib_cm iw_cm ib_sa ib_mad ib_core ib_addr iscsi_tcp libiscsi_tcp libiscsi scsi_transport_iscsi bridge stp dm_crypt llc rfcomm bnep bluetooth parport_pc ppdev nfsd nfs_acl nfs fscache lockd sunrpc kvm_intel kvm binfmt_misc psmouse dm_multipath microcode scsi_dh serio_raw dcdbas lpc_ich lp parport hid_generic ghash_clmulni_intel cryptd i915 drm_kms_helper r8169 drm usbhid hid i2c_algo_bit video [last unloaded: fsmod]
+[  333.067153] CPU: 2 PID: 3277 Comm: insmod Tainted: G           O 3.10.0 #4
+[  333.067195] Hardware name: Dell Inc. OptiPlex 390/0M5DCD, BIOS A05 02/09/2012
+[  333.067239] task: ffff88010a142e40 ti: ffff8800af186000 task.ti: ffff8800af186000
+[  333.067284] RIP: 0010:[<ffffffff81170942>]  [<ffffffff81170942>] mount_fs+0x1d2/0x1e0
+[  333.067337] RSP: 0018:ffff8800af187c88  EFLAGS: 00010246
+[  333.067369] RAX: 0000000000000000 RBX: ffff8800b7952f00 RCX: 0000000000000006
+[  333.067412] RDX: 0000000000000007 RSI: 0000000000000046 RDI: ffff88012ec4d090
+[  333.067455] RBP: ffff8800af187cc8 R08: 000000000000000a R09: 00000000000002f2
+[  333.067498] R10: 0000000000000000 R11: 00000000000002f1 R12: 0000000000000000
+[  333.067541] R13: ffffffffa050e000 R14: 0000000000000000 R15: 0000000000400000
+[  333.067584] FS:  00007ffc21944700(0000) GS:ffff88012ec40000(0000) knlGS:0000000000000000
+[  333.067633] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  333.067668] CR2: 00007ffc214813c0 CR3: 00000000b78df000 CR4: 00000000000407e0
+[  333.067711] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  333.067753] DR3: 0000000000000000 DR6: 00000000ffff0ff0 DR7: 0000000000000400
+[  333.067796] Stack:
+[  333.067809]  ffff8800af187c98 ffffffff81128ab0 ffff8800af187cc8 ffff8800b7952f00
+[  333.067857]  fffffffffffffff4 ffffffffa050e000 ffffffffa050d05d 0000000000400000
+[  333.067905]  ffff8800af187d18 ffffffff81189ea4 00000000fffffff0 0000000000000000
+[  333.067953] Call Trace:
+[  333.067974]  [<ffffffff81128ab0>] ? __alloc_percpu+0x10/0x20
+[  333.068011]  [<ffffffff81189ea4>] vfs_kern_mount+0x74/0x110
+[  333.068048]  [<ffffffffa050c030>] ? myfs_mount+0x20/0x20 [fsmod]
+[  333.068086]  [<ffffffff81189f59>] kern_mount_data+0x19/0x30
+[  333.068122]  [<ffffffffa050c076>] fsmod_init+0x46/0x80 [fsmod]
+[  333.068162]  [<ffffffff81000312>] do_one_initcall+0x112/0x170
+[  333.068200]  [<ffffffff810a4f1e>] load_module+0x1bee/0x2570
+[  333.068236]  [<ffffffff810a0e50>] ? unset_module_init_ro_nx+0x80/0x80
+[  333.068278]  [<ffffffff810a596e>] SyS_init_module+0xce/0x100
+[  333.070311]  [<ffffffff81645442>] system_call_fastpath+0x16/0x1b
+[  333.072350] Code: a2 81 e8 92 01 ed ff e9 dc fe ff ff be 62 04 00 00 48 c7 c7 be d6 a2 81 e8 7c 01 ed ff 48 8b 83 28 01 00 00 e9 b3 fe ff ff 0f 0b <0f> 0b 4c 63 e0 e9 1b ff ff ff 0f 1f 40 00 66 66 66 66 90 55 48 
+[  333.077135] RIP  [<ffffffff81170942>] mount_fs+0x1d2/0x1e0
+[  333.079318]  RSP <ffff8800af187c88>
+[  333.089600] ---[ end trace b2e799ffd0197c81 ]---
+
+
+----------- type->mount() direct msg ---------------
+[  171.578861] BUG: unable to handle kernel NULL pointer dereference at           (null)
+[  171.578949] IP: [<          (null)>]           (null)
+[  171.578973] PGD b1c7d067 PUD b1d31067 PMD 0 
+[  171.578996] Oops: 0010 [#1] SMP 
+[  171.579013] Modules linked in: fsmod(O+) rpcsec_gss_krb5 auth_rpcgss oid_registry nfsv4 ip6table_filter ip6_tables ebtable_nat ebtables target_core_mod configfs ipt_MASQUERADE iptable_nat nf_nat_ipv4 nf_nat nf_conntrack_ipv4 nf_defrag_ipv4 xt_conntrack nf_conntrack ipt_REJECT xt_CHECKSUM iptable_mangle xt_tcpudp iptable_filter ip_tables x_tables openvswitch ib_iser rdma_cm ib_cm iw_cm ib_sa ib_mad ib_core ib_addr iscsi_tcp libiscsi_tcp libiscsi scsi_transport_iscsi bridge stp llc dm_crypt rfcomm bnep bluetooth parport_pc ppdev nfsd nfs_acl nfs fscache lockd sunrpc kvm_intel kvm binfmt_misc psmouse dm_multipath serio_raw microcode scsi_dh dcdbas lpc_ich lp parport hid_generic ghash_clmulni_intel cryptd i915 drm_kms_helper usbhid r8169 hid drm i2c_algo_bit video
+[  171.579347] CPU: 2 PID: 2909 Comm: insmod Tainted: G           O 3.10.0 #6
+[  171.579378] Hardware name: Dell Inc. OptiPlex 390/0M5DCD, BIOS A05 02/09/2012
+[  171.579407] task: ffff8800c3e5c560 ti: ffff88002e130000 task.ti: ffff88002e130000
+[  171.579437] RIP: 0010:[<0000000000000000>]  [<          (null)>]           (null)
+[  171.579470] RSP: 0018:ffff88002e131c80  EFLAGS: 00010246
+[  171.579494] RAX: ffff8800bbbb2100 RBX: ffff8800bbbb2100 RCX: 0000000000000000
+[  171.579524] RDX: ffffffffa04fc07a RSI: 0000000000400000 RDI: ffffffffa04fd000
+[  171.579554] RBP: ffff88002e131cc8 R08: ffffffff81cdc0e0 R09: 0000000000000100
+[  171.579573] R10: 00000000000000f8 R11: 0000000000000000 R12: fffffffffffffff4
+[  171.579591] R13: ffffffffa04fd000 R14: 0000000000000000 R15: 0000000000400000
+[  171.579614] FS:  00007f8c0dd97700(0000) GS:ffff88012ec40000(0000) knlGS:0000000000000000
+[  171.579636] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  171.579651] CR2: 0000000000000000 CR3: 00000000b1c68000 CR4: 00000000000407e0
+[  171.579669] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  171.579688] DR3: 0000000000000000 DR6: 00000000ffff0ff0 DR7: 0000000000000400
+[  171.579706] Stack:
+[  171.579712]  ffffffff811707b3 ffff88002e131c98 ffffffff81128ab0 ffff88002e131cc8
+[  171.579733]  ffff8800bbbb2100 fffffffffffffff4 ffffffffa04fd000 ffffffffa04fc07a
+[  171.579754]  0000000000400000 ffff88002e131d18 ffffffff81189e74 00000000fffffff0
+[  171.579774] Call Trace:
+[  171.579785]  [<ffffffff811707b3>] ? mount_fs+0x43/0x1b0
+[  171.579801]  [<ffffffff81128ab0>] ? __alloc_percpu+0x10/0x20
+[  171.579818]  [<ffffffff81189e74>] vfs_kern_mount+0x74/0x110
+[  171.579834]  [<ffffffffa04fb010>] ? npfs_kill_sb+0x10/0x10 [fsmod]
+[  171.579851]  [<ffffffff81189f29>] kern_mount_data+0x19/0x30
+[  171.579866]  [<ffffffffa04fb056>] fsmod_init+0x46/0x80 [fsmod]
+[  171.579885]  [<ffffffff81000312>] do_one_initcall+0x112/0x170
+[  171.579903]  [<ffffffff810a4f1e>] load_module+0x1bee/0x2570
+[  171.580856]  [<ffffffff810a0e50>] ? unset_module_init_ro_nx+0x80/0x80
+[  171.581801]  [<ffffffff810a596e>] SyS_init_module+0xce/0x100
+[  171.582751]  [<ffffffff81645402>] system_call_fastpath+0x16/0x1b
+[  171.583712] Code:  Bad RIP value.
+[  171.584631] RIP  [<          (null)>]           (null)
+[  171.585551]  RSP <ffff88002e131c80>
+[  171.587094] CR2: 0000000000000000
+[  171.597161] ---[ end trace 9f3147bed7f16176 ]---
+
+
+//diff
+fs/super.c; fs/namespace.c;fs/filesystems.c
+
